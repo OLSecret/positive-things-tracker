@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Positive Things Tracker</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #000;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .left, .right {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .circle {
+            width: 40px;
+            height: 40px;
+            background-color: green;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        .description-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .description-container input {
+            margin-top: 10px;
+            padding: 5px;
+        }
+        .description-container button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notice Positive Things</h1>
+    <label for="numCircles">Enter a number (3-33):</label>
+    <input type="number" id="numCircles" name="numCircles" min="3" max="33">
+    <button onclick="generateCircles()">Generate</button>
+
+    <div id="box" class="container hidden">
+        <div id="left" class="left"></div>
+        <div id="right" class="right"></div>
+    </div>
+    <div id="congrats" class="hidden">
+        <h2>Congratulations! You noticed all the positive things today!</h2>
+    </div>
+
+    <script>
+        function generateCircles() {
+            const numCircles = document.getElementById('numCircles').value;
+            const leftContainer = document.getElementById('left');
+            const rightContainer = document.getElementById('right');
+            const box = document.getElementById('box');
+            const congrats = document.getElementById('congrats');
+
+            // Reset previous content
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+            box.classList.add('hidden');
+            congrats.classList.add('hidden');
+
+            if (numCircles >= 3 && numCircles <= 33) {
+                for (let i = 0; i < numCircles; i++) {
+                    const circle = document.createElement('div');
+                    circle.classList.add('circle');
+                    circle.textContent = i + 1;
+                    circle.addEventListener('click', () => describePositiveThing(circle));
+                    leftContainer.appendChild(circle);
+                }
+                box.classList.remove('hidden');
+            }
+        }
+
+        function describePositiveThing(circle) {
+            const descriptionContainer = document.createElement('div');
+            descriptionContainer.classList.add('description-container');
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Describe a positive thing';
+
+            const button = document.createElement('button');
+            button.textContent = 'OK';
+            button.addEventListener('click', () => moveCircleToRight(circle, descriptionContainer));
+
+            descriptionContainer.appendChild(input);
+            descriptionContainer.appendChild(button);
+            circle.appendChild(descriptionContainer);
+            circle.removeEventListener('click', () => describePositiveThing(circle));
+        }
+
+        function moveCircleToRight(circle, descriptionContainer) {
+            const rightContainer = document.getElementById('right');
+            const leftContainer = document.getElementById('left');
+
+            const input = descriptionContainer.querySelector('input');
+            if (input.value.trim() !== '') {
+                circle.innerHTML = input.value;
+                circle.removeChild(descriptionContainer);
+                rightContainer.appendChild(circle);
+
+                if (leftContainer.childElementCount === 0) {
+                    document.getElementById('congrats').classList.remove('hidden');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
