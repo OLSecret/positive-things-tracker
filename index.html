@@ -28,6 +28,7 @@
             align-items: center;
             justify-content: center;
             color: white;
+            position: relative;
         }
         .hidden {
             display: none;
@@ -35,7 +36,16 @@
         .description-container {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            z-index: 1;
         }
         .description-container input {
             margin-top: 10px;
