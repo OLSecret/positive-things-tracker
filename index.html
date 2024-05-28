@@ -28,7 +28,6 @@
             align-items: center;
             justify-content: center;
             color: white;
-            position: relative;
         }
         .hidden {
             display: none;
@@ -37,14 +36,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
             background: white;
             padding: 10px;
             border: 1px solid #000;
             border-radius: 5px;
+            position: absolute;
             z-index: 1;
         }
         .description-container input {
@@ -115,7 +111,14 @@
 
             descriptionContainer.appendChild(input);
             descriptionContainer.appendChild(button);
-            circle.appendChild(descriptionContainer);
+
+            // Append the description container to the body and position it
+            document.body.appendChild(descriptionContainer);
+            const rect = circle.getBoundingClientRect();
+            descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
+            descriptionContainer.style.left = `${rect.left + window.scrollX - (descriptionContainer.offsetWidth / 2) + (circle.offsetWidth / 2)}px`;
+
+            // Remove event listener to avoid multiple clicks
             circle.removeEventListener('click', () => describePositiveThing(circle));
         }
 
@@ -126,7 +129,7 @@
             const input = descriptionContainer.querySelector('input');
             if (input.value.trim() !== '') {
                 circle.innerHTML = input.value;
-                circle.removeChild(descriptionContainer);
+                document.body.removeChild(descriptionContainer); // Remove the description container from the DOM
                 rightContainer.appendChild(circle);
 
                 if (leftContainer.childElementCount === 0) {
@@ -137,3 +140,4 @@
     </script>
 </body>
 </html>
+
