@@ -97,30 +97,45 @@
             }
         }
 
-        function describePositiveThing(circle) {
-            const descriptionContainer = document.createElement('div');
-            descriptionContainer.classList.add('description-container');
+function describePositiveThing(circle) {
+    const descriptionContainer = document.createElement('div');
+    descriptionContainer.classList.add('description-container');
 
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.placeholder = 'Describe a positive thing';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Describe a positive thing';
 
-            const button = document.createElement('button');
-            button.textContent = 'OK';
-            button.addEventListener('click', () => moveCircleToRight(circle, descriptionContainer));
+    const buttonOk = document.createElement('button');
+    buttonOk.textContent = 'OK';
+    buttonOk.disabled = true; // Initially disable the OK button
+    buttonOk.addEventListener('click', () => moveCircleToRight(circle, descriptionContainer));
 
-            descriptionContainer.appendChild(input);
-            descriptionContainer.appendChild(button);
+    const buttonClose = document.createElement('button');
+    buttonClose.textContent = 'Close';
+    buttonClose.addEventListener('click', () => {
+        document.body.removeChild(descriptionContainer);
+        circle.addEventListener('click', () => describePositiveThing(circle));
+    });
 
-            // Append the description container to the body and position it
-            document.body.appendChild(descriptionContainer);
-            const rect = circle.getBoundingClientRect();
-            descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
-            descriptionContainer.style.left = `${rect.left + window.scrollX - (descriptionContainer.offsetWidth / 2) + (circle.offsetWidth / 2)}px`;
+    // Enable OK button only when input is not empty
+    input.addEventListener('input', () => {
+        buttonOk.disabled = input.value.trim() === '';
+    });
 
-            // Remove event listener to avoid multiple clicks
-            circle.removeEventListener('click', () => describePositiveThing(circle));
-        }
+    descriptionContainer.appendChild(input);
+    descriptionContainer.appendChild(buttonOk);
+    descriptionContainer.appendChild(buttonClose);
+
+    // Append the description container to the body and position it
+    document.body.appendChild(descriptionContainer);
+    const rect = circle.getBoundingClientRect();
+    descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
+    descriptionContainer.style.left = `${rect.left + window.scrollX - (descriptionContainer.offsetWidth / 2) + (circle.offsetWidth / 2)}px`;
+
+    // Remove event listener to avoid multiple clicks
+    circle.removeEventListener('click', () => describePositiveThing(circle));
+}
+
 
         function moveCircleToRight(circle, descriptionContainer) {
             const rightContainer = document.getElementById('right');
