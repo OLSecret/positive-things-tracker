@@ -135,7 +135,7 @@
             // Append the description container to the body and position it
             document.body.appendChild(descriptionContainer);
             const rect = circle.getBoundingClientRect();
-            descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
+            descriptionContainer.style.top = `${rect.bottom + window.scrollY}px`;
             descriptionContainer.style.left = `${rect.left + window.scrollX}px`;
 
             // Remove event listener to avoid multiple clicks
