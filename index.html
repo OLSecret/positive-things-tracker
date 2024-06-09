@@ -71,6 +71,12 @@
         <h2>Congratulations! You noticed all the positive things today!</h2>
     </div>
 
+    <table id="descriptionTable" border="1" style="width:100%; margin-top: 20px;">
+        <tr>
+            <th>Positive Things</th>
+        </tr>
+    </table>
+
     <script>
         function generateCircles() {
             const numCircles = document.getElementById('numCircles').value;
@@ -97,55 +103,63 @@
             }
         }
 
-function describePositiveThing(circle) {
-    const descriptionContainer = document.createElement('div');
-    descriptionContainer.classList.add('description-container');
+        function describePositiveThing(circle) {
+            const descriptionContainer = document.createElement('div');
+            descriptionContainer.classList.add('description-container');
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Describe a positive thing';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Describe a positive thing';
 
-    const buttonOk = document.createElement('button');
-    buttonOk.textContent = 'OK';
-    buttonOk.disabled = true; // Initially disable the OK button
-    buttonOk.addEventListener('click', () => moveCircleToRight(circle, descriptionContainer));
+            const buttonOk = document.createElement('button');
+            buttonOk.textContent = 'OK';
+            buttonOk.disabled = true; // Initially disable the OK button
+            buttonOk.addEventListener('click', () => moveCircleToRight(circle, descriptionContainer));
 
-    const buttonClose = document.createElement('button');
-    buttonClose.textContent = 'Close';
-    buttonClose.addEventListener('click', () => {
-        document.body.removeChild(descriptionContainer);
-        circle.addEventListener('click', () => describePositiveThing(circle));
-    });
+            const buttonClose = document.createElement('button');
+            buttonClose.textContent = 'Close';
+            buttonClose.addEventListener('click', () => {
+                document.body.removeChild(descriptionContainer);
+                circle.addEventListener('click', () => describePositiveThing(circle));
+            });
 
-    // Enable OK button only when input is not empty
-    input.addEventListener('input', () => {
-        buttonOk.disabled = input.value.trim() === '';
-    });
+            // Enable OK button only when input is not empty
+            input.addEventListener('input', () => {
+                buttonOk.disabled = input.value.trim() === '';
+            });
 
-    descriptionContainer.appendChild(input);
-    descriptionContainer.appendChild(buttonOk);
-    descriptionContainer.appendChild(buttonClose);
+            descriptionContainer.appendChild(input);
+            descriptionContainer.appendChild(buttonOk);
+            descriptionContainer.appendChild(buttonClose);
 
-    // Append the description container to the body and position it
-    document.body.appendChild(descriptionContainer);
-    const rect = circle.getBoundingClientRect();
-    descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
-    descriptionContainer.style.left = `${rect.left + window.scrollX - (descriptionContainer.offsetWidth / 2) + (circle.offsetWidth / 2)}px`;
+            // Append the description container to the body and position it
+            document.body.appendChild(descriptionContainer);
+            const rect = circle.getBoundingClientRect();
+            descriptionContainer.style.top = `${rect.top + window.scrollY + 50}px`;
+            descriptionContainer.style.left = `${rect.left + window.scrollX}px`;
 
-    // Remove event listener to avoid multiple clicks
-    circle.removeEventListener('click', () => describePositiveThing(circle));
-}
-
+            // Remove event listener to avoid multiple clicks
+            circle.removeEventListener('click', () => describePositiveThing(circle));
+        }
 
         function moveCircleToRight(circle, descriptionContainer) {
             const rightContainer = document.getElementById('right');
             const leftContainer = document.getElementById('left');
-
             const input = descriptionContainer.querySelector('input');
+
             if (input.value.trim() !== '') {
-                circle.innerHTML = input.value;
+                const description = input.value;
+                circle.innerHTML = description;
                 document.body.removeChild(descriptionContainer); // Remove the description container from the DOM
+
+                // Move circle to the right container
                 rightContainer.appendChild(circle);
+
+                // Add description to the table
+                const table = document.getElementById('descriptionTable');
+                const row = table.insertRow();
+                const cell1 = row.insertCell(0);
+                cell1.innerHTML = description;
 
                 if (leftContainer.childElementCount === 0) {
                     document.getElementById('congrats').classList.remove('hidden');
@@ -155,4 +169,3 @@ function describePositiveThing(circle) {
     </script>
 </body>
 </html>
-
