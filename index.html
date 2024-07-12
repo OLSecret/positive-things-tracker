@@ -76,7 +76,7 @@
 
     <table id="descriptionTable" border="1" style="width:100%; margin-top: 20px;">
         <tr>
-            <th>Positive Things</th>
+            <th>Positive things you noticed today</th>
         </tr>
     </table>
 
@@ -100,6 +100,7 @@
                     const circle = document.createElement('div');
                     circle.classList.add('circle');
                     circle.textContent = i + 1;
+                    circle.setAttribute("data-number", i + 1); // This stores the number as data-number attribute
                     circle.addEventListener('click', () => describePositiveThing(circle));
                     leftContainer.appendChild(circle);
                 }
@@ -163,7 +164,7 @@
 
             if (input.value.trim() !== '') {
                 const description = input.value;
-                circle.innerHTML = description;
+                circle.innerHTML = circle.getAttribute("data-number");
                 document.body.removeChild(descriptionContainer); // Remove the description container from the DOM
 
                 // Move circle to the right container
