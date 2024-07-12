@@ -53,20 +53,21 @@
             font-family: Arial, sans-serif; /* Ensures consistent font styling */
             font-size: 18px; /* Adjusts number size */
             position: absolute;
-            top: 50%;
+            /*top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2; /* Makes sure the number appears above the star */
+            transform: translate(-50%, -50%); */
+            z-index: 1; /* Makes sure the number appears above the star */
 
             /* text-align: center;
             display: block;
             line-height: 60px; */
         }
-        /* #right .circle {
-            color: darkblue; */ /* Number color inside the star */
+        #right .circle {
+            display: flex;
+            color: darkblue;  /* Number color inside the star */
             /*font-size: 18px;  */ /* Adjusts number size */
-            /* justify-content: center; */ /* Ensures content is centered */
-            /*align-items: center; */ /* Ensures vertical alignment */
+             justify-content: center;  /* Ensures content is centered */
+            align-items: center;  /* Ensures vertical alignment */
             /* position: relative;
         } */
         .hidden {
@@ -81,7 +82,7 @@
             border: 1px solid #000;
             border-radius: 5px;
             position: absolute;
-            z-index: 1;
+            z-index: 2;
         }
         .description-container input {
             margin-top: 10px;
