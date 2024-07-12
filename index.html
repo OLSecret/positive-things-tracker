@@ -42,6 +42,18 @@
         #right .circle::before {
             color: orange; /* Change star color to yellow for right circles */
         }
+        /* Right circles adjustments */
+        #right .circle::before {
+            content: attr(data-number) '★'; /* Dynamic content for number and star */
+            color: orange; /* Star color */
+            font-family: Arial, sans-serif; /* Ensures consistent font styling */
+        }
+        #right .circle {
+            color: darkblue; /* Number color inside the star */
+            font-size: 24px; /* Adjusts number size */
+            justify-content: center; /* Ensures content is centered */
+            align-items: center; /* Ensures vertical alignment */
+        }
         .hidden {
             display: none;
         }
@@ -190,7 +202,12 @@
             if (input.value.trim() !== '') {
                 const description = input.value;
                 //circle.innerHTML = circle.getAttribute("data-number");
-                circle.textContent = document.getElementById('right').children.length + 1;
+                //circle.textContent = document.getElementById('right').children.length + 1;
+
+                const newIndex = document.getElementById('right').children.length + 1;
+                circle.setAttribute('data-number', newIndex); // Set the data-number attribute
+                circle.innerHTML = ''; // Clears any existing content, necessary only if other content might be set elsewhere
+
                 document.body.removeChild(descriptionContainer); // Remove the description container from the DOM
 
                 // Move circle to the right container
