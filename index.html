@@ -83,7 +83,8 @@
     <script>
         let currentDescriptionContainer = null;
         function generateCircles() {
-            const numCircles = document.getElementById('numCircles').value;
+            //const numCircles = document.getElementById('numCircles').value;
+            const numCircles = parseInt(document.getElementById('numCircles').value, 10); // Ensure value is treated as a number
             const leftContainer = document.getElementById('left');
             const rightContainer = document.getElementById('right');
             const box = document.getElementById('box');
