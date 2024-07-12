@@ -34,30 +34,41 @@
             content: '★'; /* Star character */
             font-size: 54px; /* Slightly smaller than the circle */
             color: white;
-            line-height: 60px; /* Same as the circle's height to center vertically */
-            text-align: center;
-            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /*line-height: 60px; */ /* Same as the circle's height to center vertically */
+            /* text-align: center; */
+            /* display: block; */
         }
         /* New styles for yellow stars in right circles */
         #right .circle::before {
             color: orange; /* Change star color to yellow for right circles */
         }
         /* Right circles adjustments */
-        #right .circle::before {
-            content: attr(data-number) '★'; /* Dynamic content for number and star */
-            color: orange; /* Star color */
+        #right .circle::/*before*/ after {
+            content: attr(data-number); /* '★'; */  /* Dynamic content for number and star */
+            color: darkblue; /* number color */
             font-family: Arial, sans-serif; /* Ensures consistent font styling */
-            text-align: center;
-            display: block;
-            line-height: 60px;
-        }
-        #right .circle {
-            color: darkblue; /* Number color inside the star */
             font-size: 18px; /* Adjusts number size */
-            justify-content: center; /* Ensures content is centered */
-            align-items: center; /* Ensures vertical alignment */
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+
+            /* text-align: center;
+            display: block;
+            line-height: 60px; */
         }
+        /* #right .circle {
+            color: darkblue; */ /* Number color inside the star */
+            /*font-size: 18px;  */ /* Adjusts number size */
+            /* justify-content: center; */ /* Ensures content is centered */
+            /*align-items: center; */ /* Ensures vertical alignment */
+            /* position: relative;
+        } */
         .hidden {
             display: none;
         }
